@@ -1,40 +1,14 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import WEBAPP_URL, { SERVICE_URL } from "../constants";
+import WEBAPP_URL from "../constants";
 import homeIcon from "./Vector.svg";
 import googleLogin from "./GoogleLogin.svg";
-import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import enterIcon from "./enter-icon.svg";
 import { Tabs } from "wxt/browser";
 import savePage from "../scripts/save";
+import { fetchUser, fetchTags } from "../utils";
 
-const fetchUser = async (accessToken: string) => {
-  try {
-    const response = await axios.get(`${SERVICE_URL}/users/me`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.log("Unable to fetch user. Please login again.");
-  }
-};
-
-const fetchTags = async (accessToken: string) => {
-  try {
-    const response = await axios.post(`${SERVICE_URL}/all_tags`, {}, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      }
-    });
-    return response.data;
-  } catch (error) {
-    console.log("Unable to fetch tags");
-  }
-}
 
 function App() {
   const [accessToken, setAccessToken] = useState<string | undefined>(undefined);

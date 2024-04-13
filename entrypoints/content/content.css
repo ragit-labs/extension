@@ -6,6 +6,19 @@
     width: 100vw;
     height: 100vh;
     backdrop-filter: blur(10px);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.notification-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    background-color: #f8d7da;
+    color: #721c24;
+    border-bottom: 1px solid #f5c6cb;
+    z-index: 9999;
 }
 
 .action-bar-container {
@@ -32,4 +45,17 @@
 
 .selected-text-container pre {
     white-space: pre-wrap; 
+}
+
+.action-bar-url {
+    display: inline-block;
+    padding: 0.5 0.7rem;
+    background-color: #ccc;
+    border-radius: 6px;
+}
+
+.action-bar-input {
+    resize: none;
+    width: 100%;
+    padding: 1rem;
 }

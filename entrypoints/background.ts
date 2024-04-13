@@ -1,5 +1,5 @@
 import savePage from "./scripts/save";
-import getSelectedText from "./scripts/getSelectedText";
+import getInformationFromPage from "./scripts/getInformation";
 
 export default defineBackground(() => {
   browser.commands.onCommand.addListener((command) => {
@@ -11,14 +11,16 @@ export default defineBackground(() => {
           browser.scripting
             .executeScript({
               target: { tabId: tab.id },
-              func: getSelectedText,
+              func: getInformationFromPage,
               args: [],
             })
-            .then((selectedText) => {
-              browser.tabs.sendMessage(tab.id, {
-                action: "toggleActionBar",
-                data: { selectedText: selectedText, url: tab.url },
-              });
+            .then((info) => {
+              if (tab.id) {
+                browser.tabs.sendMessage(tab.id, {
+                  action: "toggleActionBar",
+                  data: { ...info[0].result, url: tab.url },
+                });
+              }
             });
         }
       });
