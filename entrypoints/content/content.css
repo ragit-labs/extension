@@ -1,61 +1,63 @@
 .app-container {
-    position: fixed;
-    z-index: 9999;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    backdrop-filter: blur(10px);
-    font-family: 'Courier New', Courier, monospace;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(10px);
+  font-family: "Courier New", Courier, monospace;
 }
 
 .notification-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 1rem;
-    background-color: #f8d7da;
-    color: #721c24;
-    border-bottom: 1px solid #f5c6cb;
-    z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  background-color: #f8d7da;
+  color: #721c24;
+  border-bottom: 1px solid #f5c6cb;
+  z-index: 9999;
 }
 
 .action-bar-container {
-    position: relative;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    padding: 1rem;
-    width: 60%;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    overflow-wrap: break-word;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1rem;
+  width: 60%;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow-wrap: break-word;
 }
 
 .selected-text-container {
-    padding: 1rem;
-    /* border-left: 1px solid #ccc; */
-    max-height: 30vh;
-    overflow-y: scroll;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px inset, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
-    border-radius: 4px;
+  padding: 1rem;
+  /* border-left: 1px solid #ccc; */
+  max-height: 30vh;
+  overflow-y: scroll;
+  box-shadow:
+    rgba(0, 0, 0, 0.1) 0px 10px 15px -3px inset,
+    rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
+  border-radius: 4px;
 }
 
 .selected-text-container pre {
-    white-space: pre-wrap; 
+  white-space: pre-wrap;
 }
 
 .action-bar-url {
-    display: inline-block;
-    padding: 0.5 0.7rem;
-    background-color: #ccc;
-    border-radius: 6px;
+  display: inline-block;
+  padding: 0.5 0.7rem;
+  background-color: #ccc;
+  border-radius: 6px;
 }
 
 .action-bar-input {
-    resize: none;
-    width: 100%;
-    padding: 1rem;
+  resize: none;
+  width: 100%;
+  padding: 1rem;
 }

@@ -13,7 +13,7 @@
     "zip:firefox": "wxt zip -b firefox",
     "compile": "tsc --noEmit",
     "postinstall": "wxt prepare",
-    "format": "npx prettier **/*.js **/*.ts **/*.tsx --write"
+    "format": "npx prettier entrypoints --write"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.29.2",
@@ -21,7 +21,9 @@
     "prettier": "^3.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.3"
+    "react-router-dom": "^6.22.3",
+    "@blocknote/react": "file:../BlockNote/packages/react",
+    "@blocknote/core": "file:../BlockNote/packages/core"
   },
   "devDependencies": {
     "@babel/plugin-transform-react-jsx-development": "^7.22.5",

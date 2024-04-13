@@ -9,7 +9,6 @@ import { Tabs } from "wxt/browser";
 import savePage from "../scripts/save";
 import { fetchUser, fetchTags } from "../utils";
 
-
 function App() {
   const [accessToken, setAccessToken] = useState<string | undefined>(undefined);
   const [title, setTitle] = useState<any>(undefined);
@@ -25,14 +24,14 @@ function App() {
     enabled: accessToken !== undefined,
   });
 
-  const {isLoading: tagsLoading, data: tagsData} = useQuery({
+  const { isLoading: tagsLoading, data: tagsData } = useQuery({
     queryKey: ["fetchTags"],
     queryFn: () => fetchTags(accessToken ?? ""),
     enabled: accessToken !== undefined,
   });
 
   useEffect(() => {
-    if(!tagsLoading && tagsData) setTags(tagsData.map((tag) => tag.id));
+    if (!tagsLoading && tagsData) setTags(tagsData.map((tag) => tag.id));
   }, [tagsData, tagsLoading]);
 
   useEffect(() => {
@@ -61,13 +60,15 @@ function App() {
   };
 
   const saveCurrentPage = () => {
-    browser.scripting.executeScript({
-      target: { tabId: currentTab?.id ?? -1 },
-      func: savePage,
-      args: [currentTab?.url, accessToken],
-    }).then(() => {
-      window.close();
-    });
+    browser.scripting
+      .executeScript({
+        target: { tabId: currentTab?.id ?? -1 },
+        func: savePage,
+        args: [currentTab?.url, accessToken],
+      })
+      .then(() => {
+        window.close();
+      });
   };
 
   return (
@@ -122,7 +123,16 @@ function App() {
                 )
                 .slice(0, 4)
                 .map((tag) => {
-                  return <div onClick={() => {(setTag(tag)), setSearchTerm(tag)}} className="tag">{tag}</div>;
+                  return (
+                    <div
+                      onClick={() => {
+                        setTag(tag), setSearchTerm(tag);
+                      }}
+                      className="tag"
+                    >
+                      {tag}
+                    </div>
+                  );
                 })}
             </div>
           )}
