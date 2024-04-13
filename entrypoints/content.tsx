@@ -1,12 +1,15 @@
 import ReactDOM from "react-dom/client";
 import App from "./content/App.tsx";
 import "./content/content.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export default defineContentScript({
   matches: ["<all_urls>"],
   cssInjectionMode: "ui",
 
   async main(ctx) {
+    const queryClient = new QueryClient();
+    console.log(queryClient);
     const ui = await createShadowRootUi(ctx, {
       name: "example-ui",
       position: "inline",
@@ -15,7 +18,11 @@ export default defineContentScript({
         container.append(app);
 
         const root = ReactDOM.createRoot(app);
-        root.render(<App />);
+        root.render(
+        <QueryClientProvider client={queryClient}>
+          <App />
+          </QueryClientProvider>
+        );
         return root;
       },
       onRemove: (root) => {

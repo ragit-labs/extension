@@ -21,7 +21,7 @@ export default defineConfig({
     commands: {
       "toggle-action-bar": {
         suggested_key: {
-          default: "Ctrl+K",
+          default: "Ctrl+I",
           mac: "Command+K",
         },
         description: "Toggle the action bar",

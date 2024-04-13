@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import "./App.css";
 import WEBAPP_URL from '../constants';
-import { useQuery } from '@tanstack/react-query';
-import { fetchUser } from '../utils';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { fetchUser, sendNote, Note } from '../utils';
 
 const parseUrl = (url: string) => {
     const postUrlRaw = new URL(url);
@@ -16,25 +16,16 @@ const parseUrl = (url: string) => {
 }
 
 
-const saveNote = async () => {
-
-}
-
 const App: React.FC = () => {
     // const [accessToken, setAccessToken] = useState<string | undefined>(undefined);
     const [actionBarActive, setActionBarActive] = React.useState(false);
     const [selectedText, setSelectedText] = React.useState<string>("");
+    const [title, setTitle] = React.useState<string>("");
     const [url, setUrl] = React.useState<string>("");
     const [notification, setNotification] = React.useState<string | null>(null);
 
     const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZWIzOTNjYzQtZDgxOS00NDBiLTkwYTEtZjUwYzJkOGMzZDNiIiwiZXhwIjoxNzE3OTYyNzE0fQ.djb_2SK3QOi_1uazJpvwkvBCZr_wiJxjnDTzVAg1zis";
 
-
-    const { isLoading: userLoading, data: user } = useQuery({
-        queryKey: ["fetchUser"],
-        queryFn: () => fetchUser(accessToken ?? ""),
-        enabled: accessToken !== undefined,
-      });
 
     // useEffect(() => {
     //     browser.cookies
@@ -44,12 +35,19 @@ const App: React.FC = () => {
     //       });
     //   }, [browser, accessToken]);
 
+    const { isLoading: userLoading, data: user } = useQuery({
+        queryKey: ["fetchUser"],
+        queryFn: () => fetchUser(accessToken ?? ""),
+        enabled: accessToken !== undefined,
+      });
+
     browser.runtime.onMessage.addListener((message, sender, sendResponse: (args:any) => void) => {
         if (message.action === "toggleActionBar") {
             setActionBarActive(!actionBarActive);
             console.log(message);
             setSelectedText(message.data.selectedText);
             setUrl(message.data.url);
+            setTitle(message.data.title);
         }
         return true;
     })
@@ -84,7 +82,20 @@ const App: React.FC = () => {
                         if(e.metaKey && e.key === "Enter") {
                             console.log("Save post");
                             setActionBarActive(false);
-                            pushNotification("Post saved successfully");
+                            sendNote(accessToken, {
+                                title: title,
+                                session_id: "123",
+                                url: url,
+                                content: selectedText,
+                                note: e.currentTarget.value,
+                                folder_id: "b6dfe2ce-63ee-494b-9761-37e91f76cb00",
+                                note_type: "post"
+                            }).then((response) => {
+                                    response.success && pushNotification("Post saved successfully");
+                            }).catch((error) => {
+                                console.log(error);
+                                pushNotification("Unable to save post");
+                            });
                         }
                     }}></textarea>
                 </div>
