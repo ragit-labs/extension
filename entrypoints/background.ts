@@ -1,6 +1,30 @@
 import savePage from "./scripts/save";
+import getSelectedText from "./scripts/getSelectedText";
 
 export default defineBackground(() => {
+  browser.commands.onCommand.addListener((command) => {
+    if (command === "toggle-action-bar") {
+      console.log("Toggle action bar");
+      browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
+        const tab = tabs[0];
+        if (tab.id !== undefined) {
+          browser.scripting
+            .executeScript({
+              target: { tabId: tab.id },
+              func: getSelectedText,
+              args: [],
+            })
+            .then((selectedText) => {
+              browser.tabs.sendMessage(tab.id, {
+                action: "toggleActionBar",
+                data: { selectedText: selectedText, url: tab.url },
+              });
+            });
+        }
+      });
+    }
+  });
+
   browser.runtime.onInstalled.addListener(() => {
     browser.contextMenus.create({
       id: "arkivePage",
@@ -39,15 +63,19 @@ export default defineBackground(() => {
     browser.tabs.create({ url: browser.runtime.getURL("/popup.html") });
   });
 
-  browser.runtime.onMessage.addListener((message, sender, sendResponse: (args:any) => void) => {
-    if (message.action === "getTab") {
-      browser.tabs.query({ currentWindow: true, active: true }).then((tabs) => {
-        const tab = tabs[0];
-        sendResponse(tab);
-      });
-    }
-    return true;
-  });
+  browser.runtime.onMessage.addListener(
+    (message, sender, sendResponse: (args: any) => void) => {
+      if (message.action === "getTab") {
+        browser.tabs
+          .query({ currentWindow: true, active: true })
+          .then((tabs) => {
+            const tab = tabs[0];
+            sendResponse(tab);
+          });
+      }
+      return true;
+    },
+  );
 });
 
 function loginPopup() {

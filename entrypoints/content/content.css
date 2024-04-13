@@ -1,0 +1,35 @@
+.app-container {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(10px);
+}
+
+.action-bar-container {
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1rem;
+    width: 60%;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow-wrap: break-word;
+}
+
+.selected-text-container {
+    padding: 1rem;
+    /* border-left: 1px solid #ccc; */
+    max-height: 30vh;
+    overflow-y: scroll;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px inset, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
+    border-radius: 4px;
+}
+
+.selected-text-container pre {
+    white-space: pre-wrap; 
+}
