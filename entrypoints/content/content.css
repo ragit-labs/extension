@@ -1,12 +1,13 @@
 .app-container {
   position: fixed;
-  z-index: 9999;
+  z-index: 2147483647;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   backdrop-filter: blur(10px);
   font-family: "Courier New", Courier, monospace;
+  visibility: visible !important;
 }
 
 .notification-bar {
@@ -18,7 +19,7 @@
   background-color: #f8d7da;
   color: #721c24;
   border-bottom: 1px solid #f5c6cb;
-  z-index: 9999;
+  z-index: 2147483647;
 }
 
 .action-bar-container {
@@ -32,6 +33,7 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   overflow-wrap: break-word;
+  max-height: 80vh;
 }
 
 .selected-text-container {
@@ -60,4 +62,14 @@
   resize: none;
   width: 100%;
   padding: 1rem;
+}
+
+.info-block {
+  max-height: 10rem;
+  overflow-y: scroll;
+  box-shadow:
+    rgba(0, 0, 0, 0.1) 0px 10px 15px -3px inset,
+    rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
+  border-radius: 4px;
+  margin-bottom: 1rem;
 }

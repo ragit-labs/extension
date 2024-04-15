@@ -1,5 +1,6 @@
 import savePage from "./scripts/save";
 import getInformationFromPage from "./scripts/getInformation";
+import { getDocument } from "./scripts/parseArticle";
 
 export default defineBackground(() => {
   browser.commands.onCommand.addListener((command) => {
@@ -30,7 +31,12 @@ export default defineBackground(() => {
   browser.runtime.onInstalled.addListener(() => {
     browser.contextMenus.create({
       id: "arkivePage",
-      title: "Arkive It",
+      title: "Add Page to Notes",
+      contexts: ["all"],
+    });
+    browser.contextMenus.create({
+      id: "readMode",
+      title: "Read Mode",
       contexts: ["all"],
     });
   });
@@ -58,6 +64,24 @@ export default defineBackground(() => {
             }
           }
         });
+    } else if (info.menuItemId === "readMode") {
+      if (tab !== undefined && tab.id !== undefined) {
+        browser.scripting
+          .executeScript({
+            target: { tabId: tab.id },
+            func: getDocument,
+            args: [],
+          })
+          .then((document) => {
+            if (tab.id) {
+              console.log(document);
+              browser.tabs.sendMessage(tab.id, {
+                action: "readMode",
+                data: document[0].result,
+              });
+            }
+          });
+      }
     }
   });
 
@@ -73,6 +97,12 @@ export default defineBackground(() => {
           .then((tabs) => {
             const tab = tabs[0];
             sendResponse(tab);
+          });
+      } else if(message.action === "getAccessToken") {
+        browser.cookies
+          .get({ url: "https://app.arkive.site", name: "accessToken" })
+          .then((cookie) => {
+            sendResponse(cookie?.value);
           });
       }
       return true;

@@ -1,28 +1,25 @@
 import ReactDOM from "react-dom/client";
 import App from "./content/App.tsx";
 import "./content/content.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Readability } from "@mozilla/readability";
 
 export default defineContentScript({
   matches: ["<all_urls>"],
   cssInjectionMode: "ui",
 
   async main(ctx) {
-    const queryClient = new QueryClient();
-    console.log(queryClient);
     const ui = await createShadowRootUi(ctx, {
       name: "example-ui",
       position: "inline",
       onMount: (container) => {
         const app = document.createElement("div");
         container.append(app);
-
+        var documentClone = document.cloneNode(true); 
+        // @ts-ignore
+        const article = new Readability(documentClone).parse();
         const root = ReactDOM.createRoot(app);
-        root.render(
-          <QueryClientProvider client={queryClient}>
-            <App />
-          </QueryClientProvider>,
-        );
+        // @ts-ignore
+        root.render(<App article={article} />);
         return root;
       },
       onRemove: (root) => {

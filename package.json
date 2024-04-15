@@ -1,8 +1,8 @@
 {
-  "name": "lightcone-extension",
+  "name": "retain-extension",
   "description": "manifest.json description",
   "private": true,
-  "version": "0.0.0",
+  "version": "1",
   "type": "module",
   "scripts": {
     "dev": "wxt",
@@ -16,14 +16,15 @@
     "format": "npx prettier entrypoints --write"
   },
   "dependencies": {
+    "@blocknote/core": "file:../BlockNote/packages/core",
+    "@blocknote/react": "file:../BlockNote/packages/react",
+    "@mozilla/readability": "^0.5.0",
     "@tanstack/react-query": "^5.29.2",
     "axios": "^1.6.8",
     "prettier": "^3.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.3",
-    "@blocknote/react": "file:../BlockNote/packages/react",
-    "@blocknote/core": "file:../BlockNote/packages/core"
+    "react-router-dom": "^6.22.3"
   },
   "devDependencies": {
     "@babel/plugin-transform-react-jsx-development": "^7.22.5",

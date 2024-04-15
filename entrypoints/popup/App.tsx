@@ -75,7 +75,7 @@ function App() {
     <div className="extension-popup">
       <div className="header" onClick={() => openDashboard()}>
         <img src={homeIcon} className="home-icon" alt="home-icon" />
-        <p className="header-text">Open lightcone</p>
+        <p className="header-text">Open retain</p>
       </div>
       {!userLoading && !user ? (
         <div className="login-container">

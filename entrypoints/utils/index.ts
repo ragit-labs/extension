@@ -1,16 +1,7 @@
 import axios from "axios";
 import { SERVICE_URL } from "../constants";
+import { Note } from "../types";
 
-export interface Note {
-  title?: string;
-  session_id?: string;
-  url?: string;
-  content?: string;
-  note?: string;
-  folder_id?: string;
-  extra_metadata?: object;
-  note_type?: string;
-}
 
 export const fetchUser = async (accessToken: string) => {
   try {
@@ -43,11 +34,9 @@ export const fetchTags = async (accessToken: string) => {
   }
 };
 
-export default {};
-
 export const sendNote = async (accessToken: string, note: Note) => {
   try {
-    const response = await axios.post(`${SERVICE_URL}/v2/save/note`, note, {
+    const response = await axios.post(`${SERVICE_URL}/v2/notes/save`, note, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
@@ -58,3 +47,20 @@ export const sendNote = async (accessToken: string, note: Note) => {
     console.log("Unable to save note");
   }
 };
+
+export const fetchFolders = async (accessToken: string) => {
+  try {
+    const response = await axios.post(`${SERVICE_URL}/v2/folders/get`, {}, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log("Unable to fetch folders", error);
+  }
+};
+
+
+export default {};

@@ -7,7 +7,8 @@ export default defineConfig({
   }),
   entrypointsDir: 'entrypoints',
   manifest: {
-    name: "lightcone",
+    name: "retain BETA",
+    description: "THIS EXTENSION IS FOR BETA TESTING",
     permissions: [
       "contextMenus",
       "identity",
